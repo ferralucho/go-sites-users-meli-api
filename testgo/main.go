@@ -3,7 +3,7 @@ package main
 //http://localhost:8080/miapp/123456
 
 import (
-	"./controllers/miapp"
+	"./controllers/miapi"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +16,9 @@ var (
 )
 
 func main () {
-	router.GET("/miapp/:userID", miapp.GetUser)
+	router.GET("/users/:userID", miapi.GetUser)
+	router.GET("/sites/:siteID/categories/:categoryID", miapi.GetCategory)
+	router.GET("/sites/:siteID", miapi.GetSite)
+
 	router.Run(port)
 }

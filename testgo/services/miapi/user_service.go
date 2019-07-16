@@ -1,12 +1,12 @@
-package miapp
+package miapi
 
 import (
-	"../../domains/miapp"
+	"../../domains/miapi"
 	"../../utils/apierrors"
 )
 
-func GetUserFromApi(userID int64) (*miapp.User, *apierrors.ApiError) {
-	user := &miapp.User{
+func GetUserFromApi(userID int64) (*miapi.User, *apierrors.ApiError) {
+	user := &miapi.User{
 		ID:userID,
 	}
 	if err := user.Get(); err != nil {

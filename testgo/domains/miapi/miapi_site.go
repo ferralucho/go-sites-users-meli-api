@@ -1,4 +1,4 @@
-package miapp
+package miapi
 
 import (
 	"../../utils/apierrors"
@@ -8,25 +8,22 @@ import (
 	"net/http"
 )
 
-type User struct {
-	ID               int64  `json:"id"`
-	NickName         string `json:"nickname"`
-	RegistrationDate string `json:"registration_date"`
-	CountryID        string `json:"country_id"`
-	Email            string `json:"email"`
+type Site struct {
+	Name 				string `json:"name"`
+	Id 			string `json:"id"`
 }
 
-const urlUsers = "https://api.mercadolibre.com/users/"
+const urlSites = "https://api.mercadolibre.com/sites/"
 
-func (user *User) Get() *apierrors.ApiError {
-	if user.ID == 0 {
+func (site *Site) Get() *apierrors.ApiError {
+	if site.Id == "" {
 		return &apierrors.ApiError{
-			Message: "El usuario está vacío",
+			Message: "El site está vacío",
 			Status: http.StatusBadRequest,
 		}
 	}
 
-	url := fmt.Sprintf("%s%d", urlUsers, user.ID)
+	url := fmt.Sprintf("%s%s", urlSites, site.Id)
 	res, err := http.Get(url)
 	if err != nil {
 		return &apierrors.ApiError{
@@ -44,8 +41,8 @@ func (user *User) Get() *apierrors.ApiError {
 		}
 	}
 
-	if err := json.Unmarshal(data, &user);
-	err != nil {
+	if err := json.Unmarshal(data, &site);
+		err != nil {
 		return &apierrors.ApiError{
 			Message: err.Error(),
 			Status: http.StatusInternalServerError,

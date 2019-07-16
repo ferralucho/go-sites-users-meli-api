@@ -1,7 +1,7 @@
-package miapp
+package miapi
 
 import (
-	"../../services/miapp"
+	"../../services/miapi"
 	"../../utils/apierrors"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -24,7 +24,7 @@ func GetUser(c *gin.Context){
 		return
 	}
 
-	user, apiError := miapp.GetUserFromApi(id)
+	user, apiError := miapi.GetUserFromApi(id)
 	if err != nil {
 		c.JSON(apiError.Status, apiError)
 		return
