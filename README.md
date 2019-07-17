@@ -1,6 +1,6 @@
 # go-sites-users-meli-api
 
-Api GO for Mercado Libre sites, users, countries and compound result
+Api GO for Mercado Libre sites, users, countries and compound result using channels and wait group
 
 http://localhost:8080/sites/MLA/categories/MLA5725
 
