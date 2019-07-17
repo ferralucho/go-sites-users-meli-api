@@ -8,13 +8,16 @@ import (
 
 func GetResultWaitFromApi( userID int64) (*miapi.Result, *apierrors.ApiError) {
 	var wg sync.WaitGroup
+	var wgErrors sync.WaitGroup
 	result := &miapi.Result{}
+	retError := &apierrors.ApiError{}
 
 	resultChannel := make(chan *miapi.Result)
 	defer close(resultChannel)
 
-	errorsChannel := make(chan apierrors.ApiError)
+	errorsChannel := make(chan *apierrors.ApiError)
 	defer close(errorsChannel)
+	wgErrors.Add(2)
 
 	user, err := GetUserFromApi(userID)
 	result.User = user
@@ -40,10 +43,20 @@ func GetResultWaitFromApi( userID int64) (*miapi.Result, *apierrors.ApiError) {
 		}
 	}()
 
+	go func() {
+		for error := range errorsChannel {
+			if error != nil {
+				retError = error
+			}
+			wgErrors.Done()
+		}
+	}()
+
 	wg.Wait()
 
-	return result, nil
+	return result, retError
 }
+
 /*
 func GetResultChannelFromApi(userID int64) (*miapi.Result, *apierrors.ApiError) {
 	var wg sync.WaitGroup

@@ -15,14 +15,15 @@ func GetUserFromApi(userID int64) (*miapi.User, *apierrors.ApiError) {
 	return user, nil
 }
 
-func GetUserAsyncFromApi(userID int64, values chan *miapi.Result, errors chan apierrors.ApiError) (*miapi.User, *apierrors.ApiError) {
+func GetUserAsyncFromApi(userID int64, values chan *miapi.Result, errors chan *apierrors.ApiError) {
 	user := &miapi.User{
 		ID:userID,
 	}
 	if err := user.Get();
 	err != nil {
-		errors <- *err
-		return nil, err
+		errors <- err
+	} else{
+		errors <- nil
 	}
 
 	result := &miapi.Result{
@@ -30,5 +31,4 @@ func GetUserAsyncFromApi(userID int64, values chan *miapi.Result, errors chan ap
 	}
 
 	values <- result
-	return user, nil
 }
