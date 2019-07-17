@@ -20,3 +20,14 @@ func GetSite(c *gin.Context){
 	}
 	c.JSON(http.StatusOK, site)
 }
+
+/*
+func GetAllSites(c *gin.Context){
+
+	sites, apiError := miapi.GetAllSitesFromApi()
+	if apiError != nil {
+		c.JSON(apiError.Status, apiError)
+		return
+	}
+	c.JSON(http.StatusOK, sites)
+}*/
