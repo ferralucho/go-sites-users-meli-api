@@ -21,7 +21,7 @@ func main () {
 	router.GET("/sites/:siteID", miapi.GetSite)
 	router.GET("/countries/:countryID", miapi.GetCountry)
 	router.GET("/result/:userID", miapi.GetResult)
-	//router.GET("/sites", miapi.GetAllSites)
+	router.GET("/sites", miapi.GetAllSites)
 
 	router.Run(port)
 }

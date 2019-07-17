@@ -31,15 +31,13 @@ func GetSiteAsyncFromApi(siteID string, values chan *miapi.Result, errors chan *
 	values <- result
 }
 
-
-/*
 func GetAllSitesFromApi() (*miapi.Sites, *apierrors.ApiError) {
 	sites := &miapi.Sites{}
-	if err := miapi.GetAllSites(&sites); err != nil {
+	if err := miapi.GetAllSites(sites); err != nil {
 		return nil, err
 	}
 	return sites, nil
 
 }
-*/
+
 

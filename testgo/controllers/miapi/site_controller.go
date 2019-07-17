@@ -21,7 +21,6 @@ func GetSite(c *gin.Context){
 	c.JSON(http.StatusOK, site)
 }
 
-/*
 func GetAllSites(c *gin.Context){
 
 	sites, apiError := miapi.GetAllSitesFromApi()
@@ -30,4 +29,4 @@ func GetAllSites(c *gin.Context){
 		return
 	}
 	c.JSON(http.StatusOK, sites)
-}*/
+}
