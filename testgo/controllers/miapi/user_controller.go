@@ -25,7 +25,7 @@ func GetUser(c *gin.Context){
 	}
 
 	user, apiError := miapi.GetUserFromApi(id)
-	if err != nil {
+	if apiError != nil {
 		c.JSON(apiError.Status, apiError)
 		return
 	}

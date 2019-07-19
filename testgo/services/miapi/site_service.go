@@ -7,7 +7,7 @@ import (
 
 func GetSiteFromApi(siteID string) (*miapi.Site, *apierrors.ApiError) {
 	site := &miapi.Site{
-		Id: siteID,
+		ID: siteID,
 	}
 	if err := site.Get(); err != nil {
 		return nil, err
@@ -17,7 +17,7 @@ func GetSiteFromApi(siteID string) (*miapi.Site, *apierrors.ApiError) {
 
 func GetSiteAsyncFromApi(siteID string, values chan *miapi.Result, errors chan *apierrors.ApiError) {
 	site := &miapi.Site{
-		Id: siteID,
+		ID: siteID,
 	}
 	if err := site.Get(); err != nil {
 		errors <- err

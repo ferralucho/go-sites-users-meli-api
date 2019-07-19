@@ -2,9 +2,10 @@ package miapi
 
 import (
 	"../../utils/apierrors"
+	"../../utils/constants"
+	"../../utils/requests"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -39,8 +40,6 @@ type User struct {
 	} `json:"status"`
 }
 
-const urlUsers = "https://api.mercadolibre.com/users/"
-
 func (user *User) Get() *apierrors.ApiError {
 	if user.ID == 0 {
 		return &apierrors.ApiError{
@@ -49,16 +48,8 @@ func (user *User) Get() *apierrors.ApiError {
 		}
 	}
 
-	url := fmt.Sprintf("%s%d", urlUsers, user.ID)
-	res, err := http.Get(url)
-	if err != nil {
-		return &apierrors.ApiError{
-			Message: err.Error(),
-			Status: http.StatusInternalServerError,
-		}
-	}
-
-	data, err := ioutil.ReadAll(res.Body)
+	url := fmt.Sprintf("%s%d", constants.MockUrlUsers, user.ID)
+	data, err := requests.Get(url)
 
 	if err != nil {
 		return &apierrors.ApiError{

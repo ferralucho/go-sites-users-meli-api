@@ -2,9 +2,10 @@ package miapi
 
 import (
 	"../../utils/apierrors"
+	"../../utils/constants"
+	"../../utils/requests"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -22,8 +23,6 @@ type Countries []struct {
 	CurrencyId string `json:"currency_id"`
 }
 
-const urlCountries = "https://api.mercadolibre.com/countries/"
-
 func (country *Country) Get() *apierrors.ApiError {
 	if country.Id == "" {
 		return &apierrors.ApiError{
@@ -32,21 +31,13 @@ func (country *Country) Get() *apierrors.ApiError {
 		}
 	}
 
-	url := fmt.Sprintf("%s%s", urlCountries, country.Id)
-	res, err := http.Get(url)
-	if err != nil {
-		return &apierrors.ApiError{
-			Message: err.Error(),
-			Status:  http.StatusInternalServerError,
-		}
-	}
-
-	data, err := ioutil.ReadAll(res.Body)
+	url := fmt.Sprintf("%s%s", constants.UrlCountries, country.Id)
+	data, err := requests.Get(url)
 
 	if err != nil {
 		return &apierrors.ApiError{
 			Message: err.Error(),
-			Status:  http.StatusInternalServerError,
+			Status: http.StatusInternalServerError,
 		}
 	}
 

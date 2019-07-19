@@ -21,7 +21,7 @@ func GetResult(c *gin.Context){
 	}
 
 	result, apiError := miapi.GetResultWaitFromApi(id)
-	if err != nil {
+	if apiError != nil {
 		c.JSON(apiError.Status, apiError)
 		return
 	}
