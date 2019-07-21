@@ -15,3 +15,5 @@ http://localhost:8080/sites
 http://localhost:8080/sites/MLA
 
 http://localhost:8080/countries/AR
+
+Rate limit (golang.org/x/time/rate) and circuit breaker (github.com/sony/gobreaker) added
