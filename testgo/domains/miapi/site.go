@@ -6,7 +6,6 @@ import (
 	"../../utils/requests"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -77,42 +76,9 @@ func (site *Site) Get() *apierrors.ApiError {
 
 }
 
-/*
-func GetAllSites() *apierrors.ApiError {
-
-	url := fmt.Sprintf("%s", urlSites)
-	res, err := http.Get(url)
-	if err != nil {
-		return &apierrors.ApiError{
-			Message: err.Error(),
-			Status:  http.StatusInternalServerError,
-		}
-	}
-
-	data, err := ioutil.ReadAll(res.Body)
-
-	if err != nil {
-		return &apierrors.ApiError{
-			Message: err.Error(),
-			Status:  http.StatusInternalServerError,
-		}
-	}
-
-	if err := json.Unmarshal(data, &site);
-		err != nil {
-		return &apierrors.ApiError{
-			Message: err.Error(),
-			Status:  http.StatusInternalServerError,
-		}
-	}
-	return nil
-
-}
-*/
-
 func GetAllSites(sites *Sites) *apierrors.ApiError {
 	fmt.Println("About to get all sites from MELI...")
-	res, err := http.Get(constants.UrlSites)
+	res, err := requests.Get(constants.UrlSites)
 	if err != nil {
 		return &apierrors.ApiError{
 			Message: err.Error(),
@@ -120,8 +86,6 @@ func GetAllSites(sites *Sites) *apierrors.ApiError {
 		}
 	}
 
-	data, err := ioutil.ReadAll(res.Body)
-
 	if err != nil {
 		return &apierrors.ApiError{
 			Message: err.Error(),
@@ -129,7 +93,7 @@ func GetAllSites(sites *Sites) *apierrors.ApiError {
 		}
 	}
 
-	if err := json.Unmarshal(data, &sites);
+	if err := json.Unmarshal(res, &sites);
 		err != nil {
 		return &apierrors.ApiError{
 			Message: err.Error(),
