@@ -1,10 +1,10 @@
 package main
 
-//http://localhost:8080/miapp/123456
-
 import (
 	"./controllers/miapi"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/time/rate"
+	"net/http"
 )
 
 const (
@@ -13,7 +13,20 @@ const (
 
 var (
 	router = gin.Default()
+	limiter = rate.NewLimiter(2, 5)
 )
+
+func limit(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		if limiter.Allow() == false {
+			http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
 
 func main () {
 	router.GET("/users/:userID", miapi.GetUser)
@@ -23,5 +36,6 @@ func main () {
 	router.GET("/result/:userID", miapi.GetResult)
 	router.GET("/sites", miapi.GetAllSites)
 
-	router.Run(port)
+	http.ListenAndServe(port, limit(router))
+	//router.Run(port)
 }
